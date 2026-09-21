@@ -1,0 +1,19 @@
+services:
+  jev-mcp:
+    build: .
+    container_name: jev-mcp
+    ports:
+      - "8800:8800"
+    environment:
+      # 真实环境变量优先于 config.yaml 的 env 段；
+      # 可在同目录创建 .env 文件：TYPESAFE_API_KEY=xxx / JEV_BASE_URL=https://...
+      TYPESAFE_API_KEY: ${TYPESAFE_API_KEY:-}
+      JEV_BASE_URL: ${JEV_BASE_URL:-}
+      JEV_MCP_HOST: 0.0.0.0
+      JEV_MCP_PORT: 8800
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8800/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

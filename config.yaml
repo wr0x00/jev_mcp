@@ -1,0 +1,43 @@
+# ============================================================
+# 环境变量（YAML 形式下发）
+# 优先级：真实环境变量 > 本段（同名键已存在于进程环境时，本段不生效）
+# 生产建议：API Key 走密钥管理下发，本文件不要提交真实 Key。
+# ============================================================
+env:
+  TYPESAFE_API_KEY: "https://api.typesafe.ai/v1/systemone"      # Jev 云端 API Key（必填）
+  JEV_BASE_URL: ""          # Jev 云端端点（必填）
+  JEV_MCP_HOST: 0.0.0.0     # MCP 监听地址
+  JEV_MCP_PORT: 8800        # MCP 监听端口
+  JEV_MCP_PATH: /mcp        # MCP 路径
+
+# ============================================================
+# Jev MCP 阈值配置
+# 阈值必须根据自己业务样本校准，不要直接采用默认值。
+# ============================================================
+
+client:
+  timeout_ms: 4000         # 单次 Jev 请求超时
+  max_retries: 1           # 失败重试次数（0 = 不重试）
+
+route:
+  auto_execute: 0.90       # task_type 置信度 >= 此值且不紧急 → 自动执行
+  review: 0.60             # 置信度 < 此值 → 人工复核
+  difficulty_review: 0.70  # difficulty >= 此值 → 人工复核
+
+tool_gate:
+  strict_destructive_threshold: 0.2        # destructive > 此值 → 禁止自动执行，需硬规则 + 人工审批
+  exfiltration_threshold: 0.1              # exfiltration > 此值 → block
+  scope_breach_threshold: 0.1              # scope_breach > 此值 → block
+  auto_execute_destructive_threshold: 0.05 # destructive > 此值 → 至少人工复核
+  reversibility_min: 0.5                   # reversibility < 此值（不可逆）→ 人工复核
+
+verify:
+  covers_min_noul: 0.90           # covers_user_request < 此值 → continue（继续循环）
+  has_unverified_claim_max: 0.30  # has_unverified_claim > 此值 → 升级人工
+  repeated_action_max: 0.50       # repeated_action > 此值 → 升级人工
+  max_loops: 8                    # 达到上限仍不通过 → 升级人工
+
+safety:
+  on_jev_unavailable: human_review  # Jev 超时/不可用时的动作：human_review（保守，绝不自动放行）；可改为 block
+  sanitize_external_text: true      # 外部文本进入 state 前先脱敏/隔离
+  max_context_chars: 8000           # 送入 Jev 的上下文最大长度
