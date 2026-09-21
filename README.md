@@ -2,6 +2,8 @@
 
 English | [中文](README_CN.md)
 
+#### If you want to localize jev without being restricted by the official website, then you might be interested in [NanoJev](https://github.com/TianyuCodings/NanoJev); the corresponding mcp is [nanojev_mcp](https://github.com/wr0x00/nanojev_mcp)
+
 Wraps Jev (TypeSafe System One) into MCP tools that serve as a semantic decision-control layer for Agents:
 use Jev for finite typed judgments (classification / scoring / yes-no), let code keep final execution authority, and let the LLM focus on generation and planning.
 Works with Claude Code, Codex, Cursor, and custom Harnesses.
