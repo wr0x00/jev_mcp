@@ -264,3 +264,5 @@ def agent_loop(request):
 ## License
 
 MIT
+### 最后
+目前项目雏期，如有bug或新想法，欢迎提交pr/issue。
