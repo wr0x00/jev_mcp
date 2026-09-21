@@ -1,7 +1,7 @@
 # jev-mcp
 
 [English](README.md) | 中文
-
+#### 如果你想jev本地化，不受官网限制，那么你可能对这个感兴趣[NanoJev](https://github.com/TianyuCodings/NanoJev)，对应mcp是[nanojev_mcp](https://github.com/wr0x00/nanojev_mcp)
 把 Jev（TypeSafe System One）封装成 MCP 工具，作为 Agent 的语义决策控制层：
 用 Jev 做有限类型判断（分类/打分/是否），让代码掌握最终执行权，让 LLM 专注于生成与规划。
 适用于 Claude Code、Codex、Cursor 及自研 Harness。
